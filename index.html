@@ -32,7 +32,7 @@
       display: flex; justify-content: space-between; align-items: center;
     }
     .nav-logo { display: flex; align-items: center; gap: 0.75rem; }
-    .nav-logo img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
+    .nav-logo img { width: 44px; height: 44px; border-radius: 50%; object-fit: contain; background: white; padding: 3px; }
     .nav-logo span { font-family: 'Playfair Display', serif; font-weight: 800; font-size: 1.2rem; color: var(--purple); }
     .nav-links { display: flex; gap: 1.5rem; align-items: center; }
     .nav-links a { text-decoration: none; color: var(--muted); font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
@@ -48,7 +48,7 @@
       text-align: center; padding: 6rem 2rem 4rem;
     }
     .hero-inner { max-width: 700px; }
-    .hero-logo { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; margin: 0 auto 1.5rem; box-shadow: 0 20px 60px rgba(124,58,237,0.2); }
+    .hero-logo { width: 180px; height: 180px; border-radius: 50%; object-fit: contain; background: white; margin: 0 auto 1.5rem; box-shadow: 0 20px 60px rgba(124,58,237,0.15); padding: 8px; }
     .hero-badge { display: inline-block; background: var(--purple-light); color: var(--purple); font-size: 0.8rem; font-weight: 600; padding: 0.4rem 1rem; border-radius: 999px; margin-bottom: 1.25rem; letter-spacing: 0.05em; }
     .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
     .hero h1 span { color: var(--green); }
@@ -145,7 +145,7 @@
       <img src="logo.png" alt="IRA Yoga Studio" class="hero-logo" />
       <div class="hero-badge">✦ Therapeutic Yoga · Hatha · Pranayama ✦</div>
       <h1>Heal Your Body.<br/><span>Transform Your Life.</span></h1>
-      <p>Personalized therapeutic yoga plans designed for your unique health needs. AI-powered sequences, expert guidance, and a 10-day cycle system that evolves with you.</p>
+      <p>Expert-guided therapeutic yoga tailored to your unique health needs. Personalized asana sequences, pranayama, and progressive plans that evolve with your practice.</p>
       <div class="hero-tags">
         <span class="hero-tag">🧘 Hatha Yoga</span>
         <span class="hero-tag">🌬️ Pranayama</span>
@@ -285,7 +285,7 @@
     <p>Join IRA Yoga Studio and experience the power of personalized therapeutic yoga. First consultation is free!</p>
     <div class="cta-btns">
       <a href="https://irayoga.vercel.app/register" target="_blank" class="btn-white">🙏 Register Now — Free</a>
-      <a href="https://wa.me/917996272792?text=Hi%20IRA%20Yoga%2C%20I%20want%20to%20know%20more%20about%20your%20yoga%20sessions" target="_blank" class="btn-whatsapp">
+      <a href="https://wa.me/917996272792? target="_blank" text=Hi%20IRA%20Yoga%2C%20I%20want%20to%20know%20more%20about%20your%20yoga%20sessions" target="_blank" class="btn-whatsapp">
         <span>💬</span> Chat on WhatsApp
       </a>
     </div>
@@ -299,7 +299,7 @@
     <div class="footer-links">
       <a href="https://irayoga.vercel.app/register" target="_blank">Register</a>
       <a href="https://irayoga.vercel.app/student" target="_blank">Student Login</a>
-      <a href="https://wa.me/917996272792">WhatsApp</a>
+      <a href="https://wa.me/917996272792" target="_blank">WhatsApp</a>
       <a href="https://www.instagram.com/irayoga.fitness" target="_blank">Instagram</a>
     </div>
     <p style="margin-top: 1rem; font-size: 0.75rem; opacity: 0.5;">© 2026 IRA Yoga Studio. All rights reserved.</p>
