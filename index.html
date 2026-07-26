@@ -6,7 +6,7 @@
 <title>Navira Yoga Studio — Therapeutic Yoga | Hatha | Pranayama</title>
 <meta name="description" content="Personalized therapeutic yoga for weight loss, PCOS, PCOD, back pain, stress management. Online and in-studio sessions in Guntur, Andhra Pradesh." />
 <meta name="keywords" content="therapeutic yoga, hatha yoga, pranayama, PCOS yoga, PCOD yoga, back pain yoga, weight loss yoga, online yoga, Guntur yoga, Navira Yoga Studio" />
-<link rel="icon" type="image/png" href="logo.png" />
+<link rel="icon" type="image/png" href="logo-icon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Fraunces:ital,opsz,wght@1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -39,6 +39,7 @@
   h1, h2, h3, .display { font-family: 'Fraunces', serif; }
   a { color: inherit; }
   img { max-width: 100%; display: block; }
+  button { font: inherit; cursor: pointer; }
 
   :focus-visible {
     outline: 2px solid var(--gold-deep);
@@ -60,6 +61,17 @@
     transition: opacity 0.7s ease, transform 0.7s ease;
   }
   .reveal.is-visible { opacity: 1; transform: translateY(0); }
+  .reveal-l { opacity: 0; transform: translateX(-24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal-l.is-visible { opacity: 1; transform: translateX(0); }
+  .reveal-r { opacity: 0; transform: translateX(24px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal-r.is-visible { opacity: 1; transform: translateX(0); }
+
+  /* faint paper-grain overlay for tactility on light sections */
+  .grain { position: relative; }
+  .grain::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.5; mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.02 0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 
   /* ---- divider glyph: line / lotus / line, echoing the logo lockup ---- */
   .divider {
@@ -70,48 +82,60 @@
   .divider .rule.left { --dir: left; background: linear-gradient(to left, transparent, var(--gold)); }
   .divider .rule.right { background: linear-gradient(to right, transparent, var(--gold)); }
   .divider svg { flex-shrink: 0; }
+  .divider.on-dark .rule { background: linear-gradient(to right, transparent, var(--gold-pale)); }
+  .divider.on-dark .rule.left { background: linear-gradient(to left, transparent, var(--gold-pale)); }
 
-  /* ---- circular media clip, applied to the WRAPPER not the img (border-radius+object-fit
-         clipping is unreliable across browsers on replaced elements) ---- */
-  .disc { border-radius: 50%; overflow: hidden; }
-  .disc img { width: 100%; height: 100%; object-fit: cover; }
+  /* ---- brand mark placement: the source art already carries its own ring/lockup,
+         so we size + center it rather than re-clipping it into a second circle
+         (a second forced crop is what caused the old placement bug) ---- */
+  .mark { display: flex; align-items: center; justify-content: center; }
+  .mark img { width: 100%; height: 100%; object-fit: contain; }
 
   /* ═══════════ NAV ═══════════ */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
     background: rgba(250,246,236,0.88); backdrop-filter: blur(14px);
     border-bottom: 1px solid rgba(62,74,42,0.1);
-    padding: 0 2.5rem; height: 72px;
+    padding: 0 2.5rem; height: 76px;
     display: flex; justify-content: space-between; align-items: center;
+    transition: box-shadow 0.3s, height 0.3s;
   }
-  .nav-logo { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
-  .nav-logo .disc { width: 40px; height: 40px; border: 1.5px solid rgba(190,147,70,0.4); }
+  nav.scrolled { box-shadow: 0 8px 30px rgba(23,31,16,0.06); height: 68px; }
+  .nav-logo { display: flex; align-items: center; gap: 0.8rem; text-decoration: none; }
+  .nav-logo .mark { width: 42px; height: 42px; }
   .nav-logo .word {
-    font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.15rem;
-    color: var(--olive); letter-spacing: 0.01em;
+    font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.18rem;
+    color: var(--olive); letter-spacing: 0.01em; line-height: 1.1;
   }
+  .nav-logo .word small { display: block; font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 0.6rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-deep); margin-top: 2px; }
   .nav-links { display: flex; gap: 2.1rem; align-items: center; }
   .nav-links a {
     text-decoration: none; color: var(--olive);
     opacity: 0.72;
     font-size: 0.88rem; font-weight: 600;
     transition: opacity 0.2s;
+    position: relative;
   }
+  .nav-links a:not(.nav-cta)::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -6px; height: 1px;
+    background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform 0.25s;
+  }
+  .nav-links a:not(.nav-cta):hover::after { transform: scaleX(1); }
   .nav-links a:hover { opacity: 1; }
   .nav-cta {
     background: var(--olive); color: var(--ivory) !important;
     opacity: 1 !important;
-    padding: 0.55rem 1.3rem; border-radius: 999px;
+    padding: 0.6rem 1.35rem; border-radius: 999px;
     font-size: 0.85rem; font-weight: 700;
     transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
     box-shadow: 0 4px 14px rgba(46,56,32,0.18);
   }
   .nav-cta:hover { transform: translateY(-1px); background: var(--gold-deep); box-shadow: 0 8px 20px rgba(147,113,31,0.3); }
 
-  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+  .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
   .hamburger span { display: block; width: 24px; height: 2px; background: var(--olive); border-radius: 2px; transition: all 0.3s; }
   .mobile-menu {
-    display: none; position: fixed; top: 72px; left: 0; right: 0;
+    display: none; position: fixed; top: 76px; left: 0; right: 0;
     background: var(--ivory); border-bottom: 1px solid rgba(62,74,42,0.12);
     padding: 1.5rem 2rem; z-index: 99; flex-direction: column; gap: 1rem;
     box-shadow: 0 16px 32px rgba(23,31,16,0.08);
@@ -133,7 +157,7 @@
       var(--ivory);
     display: grid; grid-template-columns: 1.05fr 0.95fr;
     align-items: center; gap: 3rem;
-    padding: 8.5rem 5rem 5rem;
+    padding: 9.5rem 5rem 5rem;
     position: relative; overflow: hidden;
   }
   .hero-text { position: relative; z-index: 1; }
@@ -147,16 +171,16 @@
     letter-spacing: 0.05em; text-transform: uppercase;
   }
   .hero h1 {
-    font-size: clamp(2.5rem, 4.2vw, 3.9rem);
-    font-weight: 600; line-height: 1.08;
+    font-size: clamp(2.6rem, 4.4vw, 4.1rem);
+    font-weight: 600; line-height: 1.06;
     color: var(--olive-black); margin-bottom: 1.4rem;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
   }
   .hero h1 em {
     font-style: italic; font-weight: 500; color: var(--gold-deep);
   }
   .hero-desc {
-    font-size: 1.05rem; color: var(--muted);
+    font-size: 1.06rem; color: var(--muted);
     line-height: 1.75; margin-bottom: 2.1rem; max-width: 460px;
   }
   .hero-tags { display: flex; gap: 0.55rem; flex-wrap: wrap; margin-bottom: 2.4rem; }
@@ -166,7 +190,7 @@
     padding: 0.4rem 0.9rem; border-radius: 999px;
     font-size: 0.78rem; color: var(--olive); font-weight: 600;
   }
-  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2.3rem; }
   .btn-primary {
     background: var(--olive); color: var(--ivory);
     padding: 0.9rem 1.9rem; border-radius: 999px;
@@ -185,6 +209,16 @@
     display: inline-flex; align-items: center; gap: 0.5rem;
   }
   .btn-outline:hover { background: var(--olive); border-color: var(--olive); color: var(--ivory); }
+  .hero-proof { display: flex; align-items: center; gap: 0.9rem; }
+  .hero-proof .avatars { display: flex; }
+  .hero-proof .avatars span {
+    width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--ivory);
+    background: var(--sage-pale); color: var(--olive-ink); font-family: 'Fraunces', serif; font-weight: 600; font-size: 0.78rem;
+    display: flex; align-items: center; justify-content: center; margin-left: -10px;
+  }
+  .hero-proof .avatars span:first-child { margin-left: 0; }
+  .hero-proof p { font-size: 0.8rem; color: var(--muted); line-height: 1.4; }
+  .hero-proof p strong { color: var(--olive-black); }
 
   .hero-visual { display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
   .hero-logo-wrap { position: relative; width: 340px; height: 340px; }
@@ -211,10 +245,34 @@
   @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   .hero-logo-disc {
     width: 100%; height: 100%; position: relative; z-index: 1;
-    border: 2px solid rgba(190,147,70,0.4);
+    border-radius: 50%;
     box-shadow: 0 30px 70px rgba(46,56,32,0.18), 0 0 0 10px rgba(255,255,255,0.5);
     background: white;
+    display: flex; align-items: center; justify-content: center;
   }
+  .hero-logo-disc .mark { width: 64%; height: 64%; }
+  .hero-float-card {
+    position: absolute; bottom: 6%; left: -6%;
+    background: white; border-radius: 16px; padding: 0.9rem 1.2rem;
+    box-shadow: 0 20px 40px rgba(46,56,32,0.16); border: 1px solid rgba(62,74,42,0.06);
+    display: flex; align-items: center; gap: 0.7rem; z-index: 2;
+    animation: floaty 5s ease-in-out infinite;
+  }
+  @keyframes floaty { 0%,100%{ transform: translateY(0);} 50%{ transform: translateY(-8px);} }
+  .hero-float-card .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--sage); flex-shrink: 0; box-shadow: 0 0 0 4px var(--sage-pale); }
+  .hero-float-card strong { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--olive-black); display: block; }
+  .hero-float-card span { font-size: 0.72rem; color: var(--muted); }
+
+  /* ═══════════ MARQUEE ═══════════ */
+  .marquee { background: var(--olive); overflow: hidden; padding: 0.85rem 0; position: relative; }
+  .marquee-track { display: flex; width: max-content; animation: scroll-left 32s linear infinite; }
+  .marquee-track span {
+    color: var(--ivory); font-family: 'Fraunces', serif; font-style: italic; font-weight: 500;
+    font-size: 0.98rem; padding: 0 2.2rem; white-space: nowrap; opacity: 0.92;
+    display: inline-flex; align-items: center; gap: 2.2rem;
+  }
+  .marquee-track span::after { content: '✦'; color: var(--gold); font-style: normal; font-size: 0.7rem; }
+  @keyframes scroll-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   /* ═══════════ STATS ═══════════ */
   .stats { background: var(--olive-black); padding: 3rem 5rem; }
@@ -229,21 +287,25 @@
 
   /* ═══════════ SECTION HEADERS ═══════════ */
   .section-header { text-align: center; margin-bottom: 3.75rem; }
+  .section-header.left { text-align: left; margin-left: 0; }
   .section-badge {
-    display: inline-block; color: var(--gold-deep);
+    display: inline-flex; align-items: center; gap: 0.5rem; color: var(--gold-deep);
     font-size: 0.74rem; font-weight: 800;
     letter-spacing: 0.14em; text-transform: uppercase;
     margin-bottom: 0.9rem;
   }
+  .section-badge::before { content: ''; width: 14px; height: 1px; background: var(--gold-deep); display: inline-block; }
+  .dark .section-badge::before, .on-dark .section-badge::before { background: var(--gold-pale); }
   .section-title {
     font-size: clamp(1.9rem, 2.6vw, 2.5rem);
     font-weight: 600; margin-bottom: 1.1rem; color: var(--olive-black);
     letter-spacing: -0.01em;
   }
   .section-sub { color: var(--muted); font-size: 0.98rem; max-width: 480px; margin: 0 auto 1.4rem; line-height: 1.7; }
-  .dark .section-badge { color: var(--gold-pale); }
-  .dark .section-title { color: var(--ivory); }
-  .dark .section-sub { color: var(--muted-on-dark); }
+  .section-header.left .section-sub { margin-left: 0; margin-right: 0; }
+  .dark .section-badge, .on-dark .section-badge { color: var(--gold-pale); }
+  .dark .section-title, .on-dark .section-title { color: var(--ivory); }
+  .dark .section-sub, .on-dark .section-sub { color: var(--muted-on-dark); }
 
   /* ═══════════ SERVICES ═══════════ */
   .services { background: var(--ivory); padding: 6.5rem 5rem; }
@@ -262,8 +324,9 @@
     width: 52px; height: 52px; border-radius: 50%;
     background: linear-gradient(135deg, var(--sage-pale), var(--gold-pale));
     display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem; margin-bottom: 1.3rem;
+    margin-bottom: 1.3rem;
   }
+  .service-icon svg { width: 24px; height: 24px; color: var(--olive-ink); }
   .service-card h3 { font-family: 'Fraunces', serif; font-size: 1.15rem; font-weight: 600; margin-bottom: 0.65rem; color: var(--olive-black); }
   .service-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
   .service-tag {
@@ -272,6 +335,37 @@
     font-size: 0.7rem; font-weight: 700;
     padding: 4px 11px; border-radius: 999px; letter-spacing: 0.03em;
   }
+
+  /* ═══════════ PHILOSOPHY (signature section) ═══════════ */
+  .philosophy {
+    background: linear-gradient(160deg, var(--olive-deep) 0%, var(--olive-black) 100%);
+    padding: 7.5rem 5rem; position: relative; overflow: hidden;
+  }
+  .philosophy-grid {
+    max-width: 1180px; margin: 0 auto; display: grid;
+    grid-template-columns: 1fr 0.85fr; gap: 4rem; align-items: center;
+  }
+  .philosophy h2 { font-size: clamp(2rem, 3vw, 2.7rem); color: var(--ivory); font-weight: 600; line-height: 1.18; margin-bottom: 1.4rem; }
+  .philosophy h2 em { font-style: italic; font-weight: 500; color: var(--gold-pale); }
+  .philosophy > .philosophy-grid > div:first-child > p { color: var(--muted-on-dark); font-size: 1.02rem; line-height: 1.8; margin-bottom: 1.6rem; max-width: 480px; }
+  .philosophy-quote {
+    border-left: 2px solid var(--gold); padding-left: 1.4rem; margin: 2rem 0;
+    font-family: 'Fraunces', serif; font-style: italic; font-size: 1.15rem; color: var(--gold-pale); line-height: 1.6;
+  }
+  .philosophy-quote cite { display: block; font-family: 'Manrope', sans-serif; font-style: normal; font-size: 0.78rem; color: var(--muted-on-dark); margin-top: 0.7rem; font-weight: 700; letter-spacing: 0.02em; }
+  .philosophy-points { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 1.8rem; }
+  .philosophy-points div { display: flex; align-items: baseline; gap: 0.7rem; font-size: 0.92rem; color: var(--ivory); font-weight: 600; }
+  .philosophy-points div::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; transform: translateY(-2px); }
+  .philosophy-visual { display: flex; align-items: center; justify-content: center; position: relative; }
+  .infinity-svg { width: 100%; max-width: 420px; height: auto; }
+  .infinity-svg path.loop {
+    fill: none; stroke: var(--gold); stroke-width: 1.6; stroke-linecap: round;
+    stroke-dasharray: 900; stroke-dashoffset: 900;
+    transition: stroke-dashoffset 2.4s cubic-bezier(0.4,0,0.2,1);
+  }
+  .infinity-svg.is-visible path.loop { stroke-dashoffset: 0; }
+  .infinity-svg path.figure { fill: var(--sage); opacity: 0.9; }
+  .infinity-svg circle.pulse { fill: var(--gold); }
 
   /* ═══════════ HOW IT WORKS ═══════════ */
   .how { background: var(--paper); padding: 6.5rem 5rem; }
@@ -294,16 +388,55 @@
   .step p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
 
   /* ═══════════ CONDITIONS ═══════════ */
-  .conditions { background: linear-gradient(160deg, var(--olive-deep) 0%, var(--olive-black) 100%); padding: 6.5rem 5rem; }
-  .conditions-grid { max-width: 1020px; margin: 0 auto; display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+  .conditions { background: var(--ivory); padding: 6.5rem 5rem; }
+  .conditions-grid { max-width: 1020px; margin: 0 auto; display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.9rem; }
   .condition-pill {
-    background: rgba(250,246,236,0.04); border: 1px solid rgba(190,147,70,0.18);
-    border-radius: 14px; padding: 1.4rem 0.75rem; text-align: center;
-    transition: transform 0.2s, border-color 0.2s, background 0.2s;
+    background: white; border: 1px solid rgba(62,74,42,0.1);
+    border-radius: 999px; padding: 0.9rem 0.6rem; text-align: center;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    display: flex; align-items: center; justify-content: center; gap: 0.4rem;
   }
-  .condition-pill:hover { transform: translateY(-3px); border-color: rgba(190,147,70,0.45); background: rgba(190,147,70,0.08); }
-  .condition-pill .emoji { font-size: 1.6rem; display: block; margin-bottom: 0.55rem; }
-  .condition-pill span:last-child { font-size: 0.78rem; font-weight: 600; color: var(--muted-on-dark); }
+  .condition-pill:hover { transform: translateY(-3px); border-color: rgba(190,147,70,0.5); box-shadow: 0 10px 22px rgba(46,56,32,0.08); }
+  .condition-pill .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+  .condition-pill span:last-child { font-size: 0.78rem; font-weight: 700; color: var(--olive-ink); }
+
+  /* ═══════════ TESTIMONIALS ═══════════ */
+  .testimonials { background: var(--sage-pale); padding: 7rem 5rem; position: relative; overflow: hidden; }
+  .testimonials-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
+  .t-card { background: var(--ivory); border-radius: 20px; padding: 2rem; border: 1px solid rgba(62,74,42,0.08); display: flex; flex-direction: column; gap: 1.2rem; }
+  .t-mark { color: var(--gold); font-family: 'Fraunces', serif; font-size: 2.4rem; line-height: 0.5; }
+  .t-card p.quote { font-size: 0.93rem; line-height: 1.75; color: var(--ink); flex-grow: 1; }
+  .t-person { display: flex; align-items: center; gap: 0.8rem; }
+  .t-avatar {
+    width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--olive), var(--sage));
+    color: var(--ivory); font-family: 'Fraunces', serif; font-weight: 600; font-size: 0.95rem;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .t-person strong { display: block; font-size: 0.86rem; color: var(--olive-black); }
+  .t-person span { font-size: 0.76rem; color: var(--muted); }
+  .placeholder-note {
+    text-align: center; font-size: 0.74rem; color: var(--muted); margin-top: 2.2rem;
+    max-width: 480px; margin-left: auto; margin-right: auto; opacity: 0.75;
+  }
+
+  /* ═══════════ FAQ ═══════════ */
+  .faq { background: var(--ivory); padding: 6.5rem 5rem; }
+  .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 0.8rem; }
+  .faq-item { background: white; border: 1px solid rgba(62,74,42,0.1); border-radius: 16px; overflow: hidden; }
+  .faq-q {
+    width: 100%; text-align: left; background: none; border: none; padding: 1.3rem 1.6rem;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    font-family: 'Fraunces', serif; font-size: 1.02rem; font-weight: 600; color: var(--olive-black);
+  }
+  .faq-q .plus { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--gold); position: relative; transition: transform 0.3s, background 0.3s; }
+  .faq-q .plus::before, .faq-q .plus::after { content: ''; position: absolute; background: var(--gold-deep); top: 50%; left: 50%; transform: translate(-50%,-50%); transition: opacity 0.2s; }
+  .faq-q .plus::before { width: 10px; height: 1.5px; }
+  .faq-q .plus::after { width: 1.5px; height: 10px; }
+  .faq-item.open .faq-q .plus { background: var(--olive); transform: rotate(180deg); }
+  .faq-item.open .faq-q .plus::after { opacity: 0; }
+  .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+  .faq-a p { padding: 0 1.6rem 1.4rem; font-size: 0.9rem; color: var(--muted); line-height: 1.75; max-width: 620px; }
 
   /* ═══════════ CTA ═══════════ */
   .cta-section { background: var(--olive-black); padding: 6.5rem 5rem; text-align: center; position: relative; overflow: hidden; }
@@ -341,88 +474,101 @@
   .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(37,211,102,0.4); }
 
   /* ═══════════ FOOTER ═══════════ */
-  footer { background: var(--olive-black); color: var(--muted-on-dark); padding: 3.5rem 5rem 2.5rem; }
-  .footer-inner { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center; }
-  .footer-brand { display: flex; align-items: center; gap: 0.9rem; }
-  .footer-brand .disc { width: 44px; height: 44px; border: 1.5px solid rgba(190,147,70,0.4); flex-shrink: 0; }
-  .footer-brand .word { font-family: 'Fraunces', serif; font-size: 1.2rem; color: var(--gold-pale); font-weight: 600; margin-bottom: 0.3rem; }
-  .footer-brand p { font-size: 0.8rem; line-height: 1.65; }
-  .footer-links { display: flex; flex-direction: column; gap: 0.55rem; align-items: flex-end; }
-  .footer-links a { color: var(--muted-on-dark); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; font-weight: 500; }
-  .footer-links a:hover { color: var(--gold-pale); }
+  footer { background: var(--olive-black); color: var(--muted-on-dark); padding: 4.5rem 5rem 2.5rem; }
+  .footer-top { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 2.5rem; padding-bottom: 3rem; border-bottom: 1px solid rgba(250,246,236,0.08); }
+  .footer-brand { display: flex; align-items: center; gap: 0.9rem; margin-bottom: 1.1rem; }
+  .footer-brand .mark { width: 46px; height: 46px; flex-shrink: 0; }
+  .footer-brand .word { font-family: 'Fraunces', serif; font-size: 1.2rem; color: var(--gold-pale); font-weight: 600; }
+  .footer-col h4 { font-family: 'Fraunces', serif; color: var(--ivory); font-size: 0.95rem; font-weight: 600; margin-bottom: 1rem; }
+  .footer-col p, .footer-col a { font-size: 0.83rem; line-height: 1.9; color: var(--muted-on-dark); text-decoration: none; display: block; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--gold-pale); }
+  .footer-desc { font-size: 0.83rem; line-height: 1.75; max-width: 300px; margin-bottom: 1.2rem; }
+  .footer-social { display: flex; gap: 0.7rem; }
+  .footer-social a { width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(190,147,70,0.35); display: flex; align-items: center; justify-content: center; }
+  .footer-social a:hover { background: rgba(190,147,70,0.12); }
+  .footer-social svg { width: 15px; height: 15px; }
   .footer-bottom {
-    max-width: 1120px; margin: 2rem auto 0; padding-top: 1.5rem;
-    border-top: 1px solid rgba(250,246,236,0.08);
+    max-width: 1120px; margin: 2rem auto 0;
     font-size: 0.74rem; color: rgba(250,246,236,0.32);
     display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;
   }
 
   /* ═══════════ RESPONSIVE ═══════════ */
   @media (max-width: 1024px) {
-    .hero { padding: 8rem 3rem 5rem; gap: 2rem; }
+    .hero { padding: 8.5rem 3rem 5rem; gap: 2rem; }
     .hero-logo-wrap { width: 280px; height: 280px; }
     .stats { padding: 2.5rem 3rem; }
-    .services, .how, .conditions, .cta-section { padding: 5rem 3rem; }
-    footer { padding: 3rem 3rem 2rem; }
+    .services, .how, .conditions, .cta-section, .philosophy, .testimonials, .faq { padding: 5rem 3rem; }
+    footer { padding: 4rem 3rem 2rem; }
     .conditions-grid { grid-template-columns: repeat(4, 1fr); }
+    .philosophy-grid { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+    .philosophy > .philosophy-grid > div:first-child > p { margin-left: auto; margin-right: auto; }
+    .philosophy-points div { justify-content: center; }
+    .philosophy-quote { text-align: left; margin-left: auto; margin-right: auto; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
   }
   @media (max-width: 768px) {
     nav { padding: 0 1.5rem; }
     .nav-links { display: none; }
     .hamburger { display: flex; }
-    .hero { grid-template-columns: 1fr; text-align: center; padding: 6.5rem 1.5rem 4rem; gap: 2.5rem; }
+    .hero { grid-template-columns: 1fr; text-align: center; padding: 7rem 1.5rem 4rem; gap: 2.5rem; }
     .hero-desc { margin-left: auto; margin-right: auto; }
     .hero-tags, .hero-btns { justify-content: center; }
+    .hero-proof { justify-content: center; }
     .hero-visual { order: -1; }
     .hero-logo-wrap { width: 220px; height: 220px; }
+    .hero-float-card { display: none; }
     .stats { padding: 2rem 1.5rem; }
     .stats-inner { grid-template-columns: repeat(2, 1fr); }
     .stat-item { border-right: none; border-bottom: 1px solid rgba(250,246,236,0.08); padding: 1rem; }
     .stat-item:nth-child(3), .stat-item:last-child { border-bottom: none; }
-    .services, .how { padding: 4.5rem 1.5rem; }
-    .services-grid { grid-template-columns: 1fr; }
+    .services, .how, .philosophy, .testimonials, .faq { padding: 4.5rem 1.5rem; }
+    .services-grid, .testimonials-grid { grid-template-columns: 1fr; }
     .steps { grid-template-columns: 1fr; gap: 2.5rem; }
     .steps::before { display: none; }
     .conditions { padding: 4.5rem 1.5rem; }
     .conditions-grid { grid-template-columns: repeat(3, 1fr); }
     .cta-section { padding: 4.5rem 1.5rem; }
-    footer { padding: 3rem 1.5rem 2rem; }
-    .footer-inner { grid-template-columns: 1fr; text-align: center; }
-    .footer-brand { flex-direction: column; }
-    .footer-links { align-items: center; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+    footer { padding: 3.5rem 1.5rem 2rem; }
+    .footer-top { grid-template-columns: 1fr; text-align: center; gap: 2.2rem; }
+    .footer-brand { justify-content: center; }
+    .footer-desc { margin-left: auto; margin-right: auto; }
+    .footer-social { justify-content: center; }
     .footer-bottom { justify-content: center; text-align: center; }
   }
   @media (max-width: 480px) {
     .conditions-grid { grid-template-columns: repeat(2, 1fr); }
-    .hero h1 { font-size: 2.1rem; }
+    .hero h1 { font-size: 2.2rem; }
   }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav>
+<nav id="nav">
   <a href="#" class="nav-logo">
-    <span class="disc"><img src="logo.png" alt="Navira Yoga Studio" /></span>
-    <span class="word">Navira Yoga</span>
+    <span class="mark"><img src="logo-icon.png" alt="Navira Yoga Studio" /></span>
+    <span class="word">Navira Yoga<small>Studio</small></span>
   </a>
   <div class="nav-links">
     <a href="#services">Services</a>
-    <a href="#how">How it Works</a>
+    <a href="#philosophy">Our Method</a>
     <a href="#conditions">Conditions</a>
+    <a href="#faq">FAQ</a>
     <a href="https://navirayogastudent.vercel.app/student" target="_blank">Student Login</a>
     <a href="https://navirayogaregister.vercel.app/register" target="_blank" class="nav-cta">Register Free →</a>
   </div>
-  <div class="hamburger" onclick="toggleMenu()">
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
     <span></span><span></span><span></span>
-  </div>
+  </button>
 </nav>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
   <a href="#services" onclick="toggleMenu()">Services</a>
-  <a href="#how" onclick="toggleMenu()">How it Works</a>
+  <a href="#philosophy" onclick="toggleMenu()">Our Method</a>
   <a href="#conditions" onclick="toggleMenu()">Conditions</a>
+  <a href="#faq" onclick="toggleMenu()">FAQ</a>
   <a href="https://navirayogastudent.vercel.app/student" target="_blank">Student Login</a>
   <a href="https://navirayogaregister.vercel.app/register" target="_blank" class="nav-cta">Register Free →</a>
 </div>
@@ -445,14 +591,32 @@
       <a href="https://navirayogaregister.vercel.app/register" target="_blank" class="btn-primary">Start Your Journey</a>
       <a href="https://wa.me/917996272792" target="_blank" class="btn-outline">WhatsApp Us</a>
     </div>
+    <div class="hero-proof">
+      <div class="avatars">
+        <span>A</span><span>R</span><span>S</span><span>M</span>
+      </div>
+      <p><strong>Real students, real progress</strong><br/>Personalized plans reviewed every cycle</p>
+    </div>
   </div>
   <div class="hero-visual">
     <div class="hero-logo-wrap">
       <div class="hero-logo-ring"></div>
-      <span class="disc hero-logo-disc"><img src="logo.png" alt="Navira Yoga Studio" /></span>
+      <span class="hero-logo-disc"><span class="mark"><img src="logo-mark.png" alt="Navira Yoga Studio emblem" /></span></span>
+      <div class="hero-float-card">
+        <span class="dot"></span>
+        <div><strong>Free first consult</strong><span>No commitment needed</span></div>
+      </div>
     </div>
   </div>
 </section>
+
+<!-- MARQUEE -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span><span>Personalized Asana Sequences</span><span>Certified Instructors</span><span>Free First Consultation</span><span>Online &amp; In-Studio</span><span>Hatha · Pranayama · Therapeutic</span></span>
+    <span><span>Personalized Asana Sequences</span><span>Certified Instructors</span><span>Free First Consultation</span><span>Online &amp; In-Studio</span><span>Hatha · Pranayama · Therapeutic</span></span>
+  </div>
+</div>
 
 <!-- STATS -->
 <section class="stats">
@@ -472,12 +636,56 @@
     <p class="section-sub">Specialized therapeutic programs designed around your health conditions and goals.</p>
   </div>
   <div class="services-grid">
-    <div class="service-card reveal"><span class="service-icon">💻</span><h3>Online Yoga Sessions</h3><p>Live personalized sessions from the comfort of your home. Connect via Google Meet with real-time instructor guidance.</p><span class="service-tag">Live · Flexible Timing</span></div>
-    <div class="service-card reveal"><span class="service-icon">⚖️</span><h3>Weight Loss Yoga</h3><p>Targeted asana sequences with pranayama to boost metabolism, tone the body, and achieve sustainable weight management.</p><span class="service-tag">10-Day Cycles</span></div>
-    <div class="service-card reveal"><span class="service-icon">🌸</span><h3>PCOD &amp; PCOS Yoga</h3><p>Specialized therapeutic sequences to regulate hormones, reduce symptoms, and restore hormonal balance naturally.</p><span class="service-tag">Therapeutic · Hormonal</span></div>
-    <div class="service-card reveal"><span class="service-icon">🦴</span><h3>Back Pain Yoga</h3><p>Evidence-based asanas for cervical, lumbar, and spinal conditions. Safe sequences with contraindication awareness.</p><span class="service-tag">Safe · Therapeutic</span></div>
-    <div class="service-card reveal"><span class="service-icon">🧠</span><h3>Stress Management</h3><p>Calming pranayama, restorative poses, and mindfulness practices to reduce anxiety, depression, and mental fatigue.</p><span class="service-tag">Mental Wellness</span></div>
-    <div class="service-card reveal"><span class="service-icon">🌿</span><h3>Progressive Personalized Plans</h3><p>Every student receives a thoughtfully crafted asana sequence — designed around your health conditions, injuries, lifestyle and goals. Your plan evolves every cycle.</p><span class="service-tag">Personalized · Smart</span></div>
+    <div class="service-card reveal">
+      <span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="12" rx="1.5"/><path d="M1 20.5h22"/></svg></span>
+      <h3>Online Yoga Sessions</h3><p>Live personalized sessions from the comfort of your home. Connect via Google Meet with real-time instructor guidance.</p><span class="service-tag">Live · Flexible Timing</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 8h14"/><path d="M7 8l-4 7a4 4 0 008 0l-4-7z"/><path d="M17 8l-4 7a4 4 0 008 0l-4-7z"/></svg></span>
+      <h3>Weight Loss Yoga</h3><p>Targeted asana sequences with pranayama to boost metabolism, tone the body, and achieve sustainable weight management.</p><span class="service-tag">10-Day Cycles</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"><path d="M12 3c1.2 3 3 4.6 5.5 5.4C15 9.6 13.2 11.6 12 15c-1.2-3.4-3-5.4-5.5-6.6C9 7.6 10.8 6 12 3z"/><path d="M12 15v6" stroke-linecap="round"/></svg></span>
+      <h3>PCOD &amp; PCOS Yoga</h3><p>Specialized therapeutic sequences to regulate hormones, reduce symptoms, and restore hormonal balance naturally.</p><span class="service-tag">Therapeutic · Hormonal</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M12 2v4"/><path d="M9 7c3 1.2 3 3.4 0 4.6s-3 3.4 0 4.6 3 3.4 0 5.8"/></svg></span>
+      <h3>Back Pain Yoga</h3><p>Evidence-based asanas for cervical, lumbar, and spinal conditions. Safe sequences with contraindication awareness.</p><span class="service-tag">Safe · Therapeutic</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a7 7 0 00-7 7c0 3 2 4 2 7h10c0-3 2-4 2-7a7 7 0 00-7-7z"/><path d="M9.5 21h5"/></svg></span>
+      <h3>Stress Management</h3><p>Calming pranayama, restorative poses, and mindfulness practices to reduce anxiety, depression, and mental fatigue.</p><span class="service-tag">Mental Wellness</span>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21V10"/><path d="M12 10C12 5.5 8.5 3 4 3c0 4.5 2.5 8 8 8z"/><path d="M12 14c0-3.5 3-5 7-5 0 3.5-2.5 6-7 6"/></svg></span>
+      <h3>Progressive Personalized Plans</h3><p>Every student receives a thoughtfully crafted asana sequence — designed around your health conditions, injuries, lifestyle and goals. Your plan evolves every cycle.</p><span class="service-tag">Personalized · Smart</span>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHY (signature section) -->
+<section class="philosophy" id="philosophy">
+  <div class="philosophy-grid">
+    <div>
+      <div class="section-badge on-dark reveal-l">The Navira Method</div>
+      <h2 class="reveal-l">A practice that <em>evolves with you</em> — not a routine you adapt to.</h2>
+      <p class="reveal-l">Most studios teach a fixed sequence. We start from your body: your conditions, your injuries, your goals — and design a plan around them. Every cycle, your instructor reviews your progress and adjusts your practice, so the yoga keeps meeting you where you actually are.</p>
+      <blockquote class="philosophy-quote reveal-l">
+        Yoga isn't one-size-fits-all. It should be shaped around the person practicing it — not the other way around.
+        <cite>— Founding philosophy, Navira Yoga Studio</cite>
+      </blockquote>
+      <div class="philosophy-points reveal-l">
+        <div>One-on-one health profiling before you begin</div>
+        <div>Plans reviewed and adjusted every cycle</div>
+        <div>Hybrid support — online, in-studio, or both</div>
+      </div>
+    </div>
+    <div class="philosophy-visual reveal-r">
+      <svg class="infinity-svg" id="infinitySvg" viewBox="0 0 400 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path class="loop" d="M200 130c-20-45-55-70-90-70-45 0-70 31-70 70s25 70 70 70c60 0 80-100 145-100 45 0 70 31 70 70s-25 70-70 70c-35 0-70-25-90-70" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle class="pulse" cx="200" cy="42" r="6"/>
+      </svg>
+    </div>
   </div>
 </section>
 
@@ -496,25 +704,82 @@
 </section>
 
 <!-- CONDITIONS -->
-<section class="conditions dark" id="conditions">
+<section class="conditions" id="conditions">
   <div class="section-header reveal">
     <div class="section-badge">We Specialize In</div>
     <h2 class="section-title">Therapeutic conditions</h2>
     <p class="section-sub">Safe, evidence-informed yoga for a wide range of health conditions.</p>
   </div>
   <div class="conditions-grid">
-    <div class="condition-pill reveal"><span class="emoji">🌸</span><span>PCOS / PCOD</span></div>
-    <div class="condition-pill reveal"><span class="emoji">⚖️</span><span>Weight Loss</span></div>
-    <div class="condition-pill reveal"><span class="emoji">🦴</span><span>Back Pain</span></div>
-    <div class="condition-pill reveal"><span class="emoji">🧠</span><span>Stress &amp; Anxiety</span></div>
-    <div class="condition-pill reveal"><span class="emoji">🩸</span><span>Diabetes</span></div>
-    <div class="condition-pill reveal"><span class="emoji">❤️</span><span>High BP</span></div>
-    <div class="condition-pill reveal"><span class="emoji">🦵</span><span>Knee Pain</span></div>
-    <div class="condition-pill reveal"><span class="emoji">🫁</span><span>Asthma</span></div>
-    <div class="condition-pill reveal"><span class="emoji">🦋</span><span>Thyroid</span></div>
-    <div class="condition-pill reveal"><span class="emoji">😔</span><span>Depression</span></div>
-    <div class="condition-pill reveal"><span class="emoji">🏃</span><span>Flexibility</span></div>
-    <div class="condition-pill reveal"><span class="emoji">💪</span><span>General Fitness</span></div>
+    <div class="condition-pill reveal"><span class="dot"></span><span>PCOS / PCOD</span></div>
+    <div class="condition-pill reveal"><span class="dot"></span><span>Weight Loss</span></div>
+    <div class="condition-pill reveal"><span class="dot"></span><span>Back Pain</span></div>
+    <div class="condition-pill reveal"><span class="dot"></span><span>Stress &amp; Anxiety</span></div>
+    <div class="condition-pill reveal"><span class="dot"></span><span>Diabetes</span></div>
+    <div class="condition-pill reveal"><span class="dot"></span><span>High BP</span></div>
+    <div class="condition-pill reveal"><span class="dot"></span><span>Knee Pain</span></div>
+    <div class="condition-pill reveal"><span class="dot"></span><span>Asthma</span></div>
+    <div class="condition-pill reveal"><span class="dot"></span><span>Thyroid</span></div>
+    <div class="condition-pill reveal"><span class="dot"></span><span>Depression</span></div>
+    <div class="condition-pill reveal"><span class="dot"></span><span>Flexibility</span></div>
+    <div class="condition-pill reveal"><span class="dot"></span><span>General Fitness</span></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS (placeholder copy — swap for real student quotes before launch) -->
+<section class="testimonials" id="testimonials">
+  <div class="section-header reveal">
+    <div class="section-badge">Student Stories</div>
+    <h2 class="section-title">Sample of what students share</h2>
+    <p class="section-sub">Placeholder quotes — swap in real student testimonials once you've collected them.</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="t-card reveal">
+      <span class="t-mark">"</span>
+      <p class="quote">My plan changes as I improve — it never feels like the same class twice. That's the difference between this and every studio I tried before.</p>
+      <div class="t-person"><span class="t-avatar">A</span><div><strong>Sample Student</strong><span>Placeholder · Online Sessions</span></div></div>
+    </div>
+    <div class="t-card reveal">
+      <span class="t-mark">"</span>
+      <p class="quote">The health profiling before I started actually mattered — my sequence works around my knees instead of ignoring them.</p>
+      <div class="t-person"><span class="t-avatar">R</span><div><strong>Sample Student</strong><span>Placeholder · In-Studio</span></div></div>
+    </div>
+    <div class="t-card reveal">
+      <span class="t-mark">"</span>
+      <p class="quote">Free consultation made it easy to try. Three cycles in, my practice looks nothing like where I started — in a good way.</p>
+      <div class="t-person"><span class="t-avatar">S</span><div><strong>Sample Student</strong><span>Placeholder · Hybrid</span></div></div>
+    </div>
+  </div>
+  <p class="placeholder-note">These are placeholder quotes for layout purposes. Replace with real, attributed student testimonials before publishing.</p>
+</section>
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="section-header reveal">
+    <div class="section-badge">Good to Know</div>
+    <h2 class="section-title">Frequently asked questions</h2>
+    <p class="section-sub">Everything you need to know before you start.</p>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Do I need prior yoga experience? <span class="plus"></span></button>
+      <div class="faq-a"><p>No. Every plan starts with a health and experience profile, so your sequence is built for your current level — whether you're a complete beginner or an experienced practitioner.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">What happens in the free first consultation? <span class="plus"></span></button>
+      <div class="faq-a"><p>We go through your health history, current conditions, injuries, and goals, and explain how a personalized plan would look for you — no commitment required.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Can I switch between online and in-studio sessions?</button>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">How often is my plan updated? <span class="plus"></span></button>
+      <div class="faq-a"><p>Your instructor reviews your progress and adjusts your sequence on a regular cycle, so the practice keeps pace with how your body is responding.</p></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Is this suitable for managing conditions like PCOS or back pain? <span class="plus"></span></button>
+      <div class="faq-a"><p>Yes — our therapeutic sequences are designed with contraindication awareness for conditions like PCOS/PCOD, back pain, thyroid issues, and more, always with your specific case in mind.</p></div>
+    </div>
   </div>
 </section>
 
@@ -522,9 +787,9 @@
 <section class="cta-section">
   <h2 class="reveal">Ready to begin your<br/><em>healing journey?</em></h2>
   <p class="reveal">Join Navira Yoga Studio and experience the power of personalized therapeutic yoga. First consultation is free!</p>
-  <div class="divider reveal">
+  <div class="divider on-dark reveal">
     <span class="rule left"></span>
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3c1.2 3 3 4.6 5.5 5.4C15 9.6 13.2 11.6 12 15c-1.2-3.4-3-5.4-5.5-6.6C9 7.6 10.8 6 12 3z" stroke="#BE9346" stroke-width="1.3" stroke-linejoin="round"/></svg>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 3c1.2 3 3 4.6 5.5 5.4C15 9.6 13.2 11.6 12 15c-1.2-3.4-3-5.4-5.5-6.6C9 7.6 10.8 6 12 3z" stroke="#EFE0BC" stroke-width="1.3" stroke-linejoin="round"/></svg>
     <span class="rule right"></span>
   </div>
   <div class="cta-btns reveal">
@@ -535,19 +800,36 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <span class="disc"><img src="logo.png" alt="Navira Yoga Studio" /></span>
-      <div>
-        <div class="word">Navira Yoga Studio</div>
-        <p>Therapeutic Yoga · Hatha · Pranayama<br/>Guntur, Andhra Pradesh · Online Sessions · English &amp; Español</p>
+  <div class="footer-top">
+    <div>
+      <div class="footer-brand">
+        <span class="mark"><img src="logo-icon.png" alt="Navira Yoga Studio" /></span>
+        <span class="word">Navira Yoga Studio</span>
+      </div>
+      <p class="footer-desc">Therapeutic Yoga · Hatha · Pranayama. Personalized practice for a healthy, healed you — online and in Guntur, Andhra Pradesh.</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/ira_yoga_studio" target="_blank" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="https://wa.me/917996272792" target="_blank" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></a>
       </div>
     </div>
-    <div class="footer-links">
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="#services">Services</a>
+      <a href="#philosophy">Our Method</a>
+      <a href="#conditions">Conditions</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Get Started</h4>
       <a href="https://navirayogaregister.vercel.app/register" target="_blank">Register Free</a>
       <a href="https://navirayogastudent.vercel.app/student" target="_blank">Student Login</a>
-      <a href="https://wa.me/917996272792" target="_blank">WhatsApp</a>
-      <a href="https://www.instagram.com/ira_yoga_studio" target="_blank">Instagram</a>
+      <a href="https://wa.me/917996272792" target="_blank">WhatsApp Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Studio Hours</h4>
+      <p>Mon – Fri: 6:00 – 11:00 AM</p>
+      <p>Saturday: 7:00 – 12:00 PM</p>
+      <p>Sunday: Closed</p>
     </div>
   </div>
   <div class="footer-bottom">
@@ -562,7 +844,24 @@
   }
   window.addEventListener('scroll', function() {
     document.getElementById('mobileMenu').classList.remove('open');
+    var nav = document.getElementById('nav');
+    if (window.scrollY > 20) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); }
   });
+
+  function toggleFaq(btn) {
+    var item = btn.closest('.faq-item');
+    var wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(el) {
+      el.classList.remove('open');
+      var a = el.querySelector('.faq-a');
+      if (a) a.style.maxHeight = null;
+    });
+    if (!wasOpen) {
+      item.classList.add('open');
+      var a = item.querySelector('.faq-a');
+      if (a) a.style.maxHeight = a.scrollHeight + 'px';
+    }
+  }
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if ('IntersectionObserver' in window && !reduceMotion) {
@@ -574,9 +873,22 @@
         }
       });
     }, { threshold: 0.15 });
-    document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+    document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(function(el) { io.observe(el); });
+
+    var svgIo = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          svgIo.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    var infinitySvg = document.getElementById('infinitySvg');
+    if (infinitySvg) svgIo.observe(infinitySvg);
   } else {
-    document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('is-visible'); });
+    document.querySelectorAll('.reveal, .reveal-l, .reveal-r').forEach(function(el) { el.classList.add('is-visible'); });
+    var infinitySvg2 = document.getElementById('infinitySvg');
+    if (infinitySvg2) infinitySvg2.classList.add('is-visible');
   }
 </script>
 
