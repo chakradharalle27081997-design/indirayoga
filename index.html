@@ -401,23 +401,55 @@
   .condition-pill span:last-child { font-size: 0.78rem; font-weight: 700; color: var(--olive-ink); }
 
   /* ═══════════ TESTIMONIALS ═══════════ */
-  .testimonials { background: var(--sage-pale); padding: 7rem 5rem; position: relative; overflow: hidden; }
-  .testimonials-grid { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6rem; }
-  .t-card { background: var(--ivory); border-radius: 20px; padding: 2rem; border: 1px solid rgba(62,74,42,0.08); display: flex; flex-direction: column; gap: 1.2rem; }
-  .t-mark { color: var(--gold); font-family: 'Fraunces', serif; font-size: 2.4rem; line-height: 0.5; }
-  .t-card p.quote { font-size: 0.93rem; line-height: 1.75; color: var(--ink); flex-grow: 1; }
+  .testimonials { background: var(--sage-pale); padding: 7rem 0; position: relative; overflow: hidden; }
+  .testimonials .section-header { padding: 0 5rem; }
+  .t-rating { display: flex; align-items: center; justify-content: center; gap: 0.6rem; margin-bottom: 0.6rem; }
+  .t-rating .stars { color: var(--gold-deep); letter-spacing: 2px; font-size: 1rem; }
+  .t-rating span.score { font-family: 'Fraunces', serif; font-weight: 600; color: var(--olive-black); font-size: 1.05rem; }
+  .t-rating span.count { font-size: 0.8rem; color: var(--muted); }
+
+  .testimonials-carousel {
+    overflow: hidden; position: relative; padding: 0.5rem 0;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+  }
+  .tcarousel-track {
+    display: flex; gap: 1.4rem; width: max-content;
+    animation: scroll-cards 46s linear infinite;
+    padding: 0 5rem;
+  }
+  .tcarousel-track:hover, .tcarousel-track.paused { animation-play-state: paused; }
+  @keyframes scroll-cards { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .t-card {
+    background: var(--ivory); border-radius: 20px; padding: 1.9rem;
+    border: 1px solid rgba(62,74,42,0.08); display: flex; flex-direction: column; gap: 1.1rem;
+    width: 340px; flex-shrink: 0;
+  }
+  .t-card-top { display: flex; align-items: center; justify-content: space-between; }
+  .t-stars { color: var(--gold-deep); letter-spacing: 2px; font-size: 0.85rem; }
+  .t-google {
+    display: flex; align-items: center; gap: 0.35rem; font-size: 0.7rem; font-weight: 700;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .t-google svg { width: 14px; height: 14px; }
+  .t-card p.quote { font-size: 0.91rem; line-height: 1.72; color: var(--ink); flex-grow: 1; }
   .t-person { display: flex; align-items: center; gap: 0.8rem; }
   .t-avatar {
-    width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
     background: linear-gradient(135deg, var(--olive), var(--sage));
-    color: var(--ivory); font-family: 'Fraunces', serif; font-weight: 600; font-size: 0.95rem;
+    color: var(--ivory); font-family: 'Fraunces', serif; font-weight: 600; font-size: 0.9rem;
     display: flex; align-items: center; justify-content: center;
   }
-  .t-person strong { display: block; font-size: 0.86rem; color: var(--olive-black); }
-  .t-person span { font-size: 0.76rem; color: var(--muted); }
-  .placeholder-note {
-    text-align: center; font-size: 0.74rem; color: var(--muted); margin-top: 2.2rem;
-    max-width: 480px; margin-left: auto; margin-right: auto; opacity: 0.75;
+  .t-person strong { display: block; font-size: 0.85rem; color: var(--olive-black); }
+  .t-person span { font-size: 0.74rem; color: var(--muted); }
+  .t-more {
+    text-align: center; margin-top: 2.4rem; padding: 0 5rem;
+  }
+  .t-more a {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    color: var(--olive); font-weight: 700; font-size: 0.88rem; text-decoration: none;
+    border-bottom: 1.5px solid var(--gold); padding-bottom: 2px;
   }
 
   /* ═══════════ FAQ ═══════════ */
@@ -498,7 +530,9 @@
     .hero { padding: 8.5rem 3rem 5rem; gap: 2rem; }
     .hero-logo-wrap { width: 280px; height: 280px; }
     .stats { padding: 2.5rem 3rem; }
-    .services, .how, .conditions, .cta-section, .philosophy, .testimonials, .faq { padding: 5rem 3rem; }
+    .services, .how, .conditions, .cta-section, .philosophy, .faq { padding: 5rem 3rem; }
+    .testimonials { padding: 5rem 0; }
+    .testimonials .section-header, .tcarousel-track, .t-more { padding-left: 3rem; padding-right: 3rem; }
     footer { padding: 4rem 3rem 2rem; }
     .conditions-grid { grid-template-columns: repeat(4, 1fr); }
     .philosophy-grid { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
@@ -522,8 +556,11 @@
     .stats-inner { grid-template-columns: repeat(2, 1fr); }
     .stat-item { border-right: none; border-bottom: 1px solid rgba(250,246,236,0.08); padding: 1rem; }
     .stat-item:nth-child(3), .stat-item:last-child { border-bottom: none; }
-    .services, .how, .philosophy, .testimonials, .faq { padding: 4.5rem 1.5rem; }
-    .services-grid, .testimonials-grid { grid-template-columns: 1fr; }
+    .services, .how, .philosophy, .faq { padding: 4.5rem 1.5rem; }
+    .testimonials { padding: 4.5rem 0; }
+    .testimonials .section-header, .tcarousel-track, .t-more { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .t-card { width: 280px; }
     .steps { grid-template-columns: 1fr; gap: 2.5rem; }
     .steps::before { display: none; }
     .conditions { padding: 4.5rem 1.5rem; }
@@ -726,31 +763,77 @@
   </div>
 </section>
 
-<!-- TESTIMONIALS (placeholder copy — swap for real student quotes before launch) -->
+<!-- TESTIMONIALS (real Google reviews — 4 more pending full text, see note in chat) -->
 <section class="testimonials" id="testimonials">
   <div class="section-header reveal">
     <div class="section-badge">Student Stories</div>
-    <h2 class="section-title">Sample of what students share</h2>
-    <p class="section-sub">Placeholder quotes — swap in real student testimonials once you've collected them.</p>
+    <h2 class="section-title">What our students say</h2>
+    <div class="t-rating">
+      <span class="stars">★★★★★</span>
+      <span class="score">5.0</span>
+      <span class="count">on Google Reviews</span>
+    </div>
+    <p class="section-sub">Real reviews from real students, straight from our Google Business Profile.</p>
   </div>
-  <div class="testimonials-grid">
-    <div class="t-card reveal">
-      <span class="t-mark">"</span>
-      <p class="quote">My plan changes as I improve — it never feels like the same class twice. That's the difference between this and every studio I tried before.</p>
-      <div class="t-person"><span class="t-avatar">A</span><div><strong>Sample Student</strong><span>Placeholder · Online Sessions</span></div></div>
-    </div>
-    <div class="t-card reveal">
-      <span class="t-mark">"</span>
-      <p class="quote">The health profiling before I started actually mattered — my sequence works around my knees instead of ignoring them.</p>
-      <div class="t-person"><span class="t-avatar">R</span><div><strong>Sample Student</strong><span>Placeholder · In-Studio</span></div></div>
-    </div>
-    <div class="t-card reveal">
-      <span class="t-mark">"</span>
-      <p class="quote">Free consultation made it easy to try. Three cycles in, my practice looks nothing like where I started — in a good way.</p>
-      <div class="t-person"><span class="t-avatar">S</span><div><strong>Sample Student</strong><span>Placeholder · Hybrid</span></div></div>
+
+  <div class="testimonials-carousel">
+    <div class="tcarousel-track" id="tcarouselTrack">
+      <!-- set A -->
+      <div class="t-card">
+        <div class="t-card-top">
+          <span class="t-stars">★★★★★</span>
+          <span class="t-google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.23c0-.75-.07-1.47-.19-2.16H12v4.09h5.87a5.02 5.02 0 01-2.18 3.3v2.74h3.52c2.06-1.9 3.29-4.7 3.29-7.97z"/><path fill="#34A853" d="M12 23c2.94 0 5.4-.97 7.21-2.63l-3.52-2.74c-.98.66-2.23 1.05-3.69 1.05-2.83 0-5.23-1.91-6.09-4.48H2.28v2.82A11 11 0 0012 23z"/><path fill="#FBBC05" d="M5.91 14.2A6.6 6.6 0 015.57 12c0-.76.13-1.5.34-2.2V6.98H2.28A11 11 0 001 12c0 1.77.43 3.45 1.28 4.98l3.63-2.78z"/><path fill="#EA4335" d="M12 5.48c1.6 0 3.03.55 4.16 1.63l3.12-3.12C17.39 2.17 14.94 1 12 1a11 11 0 00-9.72 5.98l3.63 2.82C6.77 7.39 9.17 5.48 12 5.48z"/></svg>Google</span>
+        </div>
+        <p class="quote">Navira yoga is one of best yoga institution. I joined in online course 2 months back. I lost 5kgs weight and my body become more flexible. Thank you navira yoga.</p>
+        <div class="t-person"><span class="t-avatar">A</span><div><strong>Aparna Reddy</strong><span>Online Sessions</span></div></div>
+      </div>
+      <div class="t-card">
+        <div class="t-card-top">
+          <span class="t-stars">★★★★★</span>
+          <span class="t-google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.23c0-.75-.07-1.47-.19-2.16H12v4.09h5.87a5.02 5.02 0 01-2.18 3.3v2.74h3.52c2.06-1.9 3.29-4.7 3.29-7.97z"/><path fill="#34A853" d="M12 23c2.94 0 5.4-.97 7.21-2.63l-3.52-2.74c-.98.66-2.23 1.05-3.69 1.05-2.83 0-5.23-1.91-6.09-4.48H2.28v2.82A11 11 0 0012 23z"/><path fill="#FBBC05" d="M5.91 14.2A6.6 6.6 0 015.57 12c0-.76.13-1.5.34-2.2V6.98H2.28A11 11 0 001 12c0 1.77.43 3.45 1.28 4.98l3.63-2.78z"/><path fill="#EA4335" d="M12 5.48c1.6 0 3.03.55 4.16 1.63l3.12-3.12C17.39 2.17 14.94 1 12 1a11 11 0 00-9.72 5.98l3.63 2.82C6.77 7.39 9.17 5.48 12 5.48z"/></svg>Google</span>
+        </div>
+        <p class="quote">The classes have so helped me for my PCOD — the yoga helped me a lot, it became a part of my life. Thank you, coach.</p>
+        <div class="t-person"><span class="t-avatar">P</span><div><strong>Pavani Valamarthi</strong><span>Online Sessions · PCOD</span></div></div>
+      </div>
+      <div class="t-card">
+        <div class="t-card-top">
+          <span class="t-stars">★★★★★</span>
+          <span class="t-google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.23c0-.75-.07-1.47-.19-2.16H12v4.09h5.87a5.02 5.02 0 01-2.18 3.3v2.74h3.52c2.06-1.9 3.29-4.7 3.29-7.97z"/><path fill="#34A853" d="M12 23c2.94 0 5.4-.97 7.21-2.63l-3.52-2.74c-.98.66-2.23 1.05-3.69 1.05-2.83 0-5.23-1.91-6.09-4.48H2.28v2.82A11 11 0 0012 23z"/><path fill="#FBBC05" d="M5.91 14.2A6.6 6.6 0 015.57 12c0-.76.13-1.5.34-2.2V6.98H2.28A11 11 0 001 12c0 1.77.43 3.45 1.28 4.98l3.63-2.78z"/><path fill="#EA4335" d="M12 5.48c1.6 0 3.03.55 4.16 1.63l3.12-3.12C17.39 2.17 14.94 1 12 1a11 11 0 00-9.72 5.98l3.63 2.82C6.77 7.39 9.17 5.48 12 5.48z"/></svg>Google</span>
+        </div>
+        <p class="quote">Online yoga classes. Good!</p>
+        <div class="t-person"><span class="t-avatar">M</span><div><strong>Mahesh Kumar</strong><span>Online Sessions</span></div></div>
+      </div>
+      <!-- set B (duplicate for seamless loop) -->
+      <div class="t-card" aria-hidden="true">
+        <div class="t-card-top">
+          <span class="t-stars">★★★★★</span>
+          <span class="t-google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.23c0-.75-.07-1.47-.19-2.16H12v4.09h5.87a5.02 5.02 0 01-2.18 3.3v2.74h3.52c2.06-1.9 3.29-4.7 3.29-7.97z"/><path fill="#34A853" d="M12 23c2.94 0 5.4-.97 7.21-2.63l-3.52-2.74c-.98.66-2.23 1.05-3.69 1.05-2.83 0-5.23-1.91-6.09-4.48H2.28v2.82A11 11 0 0012 23z"/><path fill="#FBBC05" d="M5.91 14.2A6.6 6.6 0 015.57 12c0-.76.13-1.5.34-2.2V6.98H2.28A11 11 0 001 12c0 1.77.43 3.45 1.28 4.98l3.63-2.78z"/><path fill="#EA4335" d="M12 5.48c1.6 0 3.03.55 4.16 1.63l3.12-3.12C17.39 2.17 14.94 1 12 1a11 11 0 00-9.72 5.98l3.63 2.82C6.77 7.39 9.17 5.48 12 5.48z"/></svg>Google</span>
+        </div>
+        <p class="quote">Navira yoga is one of best yoga institution. I joined in online course 2 months back. I lost 5kgs weight and my body become more flexible. Thank you navira yoga.</p>
+        <div class="t-person"><span class="t-avatar">A</span><div><strong>Aparna Reddy</strong><span>Online Sessions</span></div></div>
+      </div>
+      <div class="t-card" aria-hidden="true">
+        <div class="t-card-top">
+          <span class="t-stars">★★★★★</span>
+          <span class="t-google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.23c0-.75-.07-1.47-.19-2.16H12v4.09h5.87a5.02 5.02 0 01-2.18 3.3v2.74h3.52c2.06-1.9 3.29-4.7 3.29-7.97z"/><path fill="#34A853" d="M12 23c2.94 0 5.4-.97 7.21-2.63l-3.52-2.74c-.98.66-2.23 1.05-3.69 1.05-2.83 0-5.23-1.91-6.09-4.48H2.28v2.82A11 11 0 0012 23z"/><path fill="#FBBC05" d="M5.91 14.2A6.6 6.6 0 015.57 12c0-.76.13-1.5.34-2.2V6.98H2.28A11 11 0 001 12c0 1.77.43 3.45 1.28 4.98l3.63-2.78z"/><path fill="#EA4335" d="M12 5.48c1.6 0 3.03.55 4.16 1.63l3.12-3.12C17.39 2.17 14.94 1 12 1a11 11 0 00-9.72 5.98l3.63 2.82C6.77 7.39 9.17 5.48 12 5.48z"/></svg>Google</span>
+        </div>
+        <p class="quote">The classes have so helped me for my PCOD — the yoga helped me a lot, it became a part of my life. Thank you, coach.</p>
+        <div class="t-person"><span class="t-avatar">P</span><div><strong>Pavani Valamarthi</strong><span>Online Sessions · PCOD</span></div></div>
+      </div>
+      <div class="t-card" aria-hidden="true">
+        <div class="t-card-top">
+          <span class="t-stars">★★★★★</span>
+          <span class="t-google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.23c0-.75-.07-1.47-.19-2.16H12v4.09h5.87a5.02 5.02 0 01-2.18 3.3v2.74h3.52c2.06-1.9 3.29-4.7 3.29-7.97z"/><path fill="#34A853" d="M12 23c2.94 0 5.4-.97 7.21-2.63l-3.52-2.74c-.98.66-2.23 1.05-3.69 1.05-2.83 0-5.23-1.91-6.09-4.48H2.28v2.82A11 11 0 0012 23z"/><path fill="#FBBC05" d="M5.91 14.2A6.6 6.6 0 015.57 12c0-.76.13-1.5.34-2.2V6.98H2.28A11 11 0 001 12c0 1.77.43 3.45 1.28 4.98l3.63-2.78z"/><path fill="#EA4335" d="M12 5.48c1.6 0 3.03.55 4.16 1.63l3.12-3.12C17.39 2.17 14.94 1 12 1a11 11 0 00-9.72 5.98l3.63 2.82C6.77 7.39 9.17 5.48 12 5.48z"/></svg>Google</span>
+        </div>
+        <p class="quote">Online yoga classes. Good!</p>
+        <div class="t-person"><span class="t-avatar">M</span><div><strong>Mahesh Kumar</strong><span>Online Sessions</span></div></div>
+      </div>
     </div>
   </div>
-  <p class="placeholder-note">These are placeholder quotes for layout purposes. Replace with real, attributed student testimonials before publishing.</p>
+
+  <div class="t-more reveal">
+    <a href="https://share.google/i3FCr1k7QgSkUjzjT" target="_blank">Read all reviews on Google →</a>
+  </div>
 </section>
 
 <!-- FAQ -->
@@ -847,6 +930,11 @@
     var nav = document.getElementById('nav');
     if (window.scrollY > 20) { nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); }
   });
+
+  var tTrack = document.getElementById('tcarouselTrack');
+  if (tTrack) {
+    tTrack.addEventListener('touchstart', function() { tTrack.classList.add('paused'); }, { passive: true });
+  }
 
   function toggleFaq(btn) {
     var item = btn.closest('.faq-item');
