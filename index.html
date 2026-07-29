@@ -263,7 +263,33 @@
   .hero-float-card strong { font-family: 'Fraunces', serif; font-size: 0.95rem; color: var(--olive-black); display: block; }
   .hero-float-card span { font-size: 0.72rem; color: var(--muted); }
 
-  /* ═══════════ MARQUEE ═══════════ */
+  .hero-accent {
+    position: absolute; border-radius: 50%; pointer-events: none;
+    border: 1px solid rgba(139,156,107,0.35); opacity: 0;
+  }
+  .hero-accent.leaf { border: none; opacity: 0; }
+  .hero-accent.leaf svg { width: 100%; height: 100%; }
+
+  /* ═══════════ WIDE DESKTOP ENRICHMENT ═══════════ */
+  @media (min-width: 1300px) {
+    .hero-logo-wrap { width: 420px; height: 420px; }
+    .hero-accent { opacity: 1; }
+    .hero-accent.ring1 { width: 560px; height: 560px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation: spin 60s linear infinite reverse; }
+    .hero-accent.ring2 { width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%,-50%); border-style: dashed; opacity: 0.5; }
+    .hero-accent.leaf { width: 46px; opacity: 0.5; animation: floaty 6s ease-in-out infinite; }
+    .hero-accent.leaf1 { top: 2%; right: 4%; animation-delay: 0.3s; }
+    .hero-accent.leaf2 { bottom: 8%; right: -2%; width: 34px; animation-delay: 1.4s; }
+    .hero-accent.dotcluster { top: 12%; left: -2%; opacity: 0.7; }
+
+    .philosophy { padding: 9rem 5rem; }
+    .philosophy-grid { gap: 5rem; }
+    .infinity-svg { max-width: 520px; }
+    .philosophy-visual { position: relative; }
+    .philosophy-visual::before {
+      content: ''; position: absolute; width: 620px; height: 620px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(190,147,70,0.1) 0%, transparent 68%);
+    }
+  }
   .marquee { background: var(--olive); overflow: hidden; padding: 0.85rem 0; position: relative; }
   .marquee-track { display: flex; width: max-content; animation: scroll-left 32s linear infinite; }
   .marquee-track span {
@@ -410,16 +436,12 @@
 
   .testimonials-carousel {
     overflow: hidden; position: relative; padding: 0.5rem 0;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
   }
   .tcarousel-track {
-    display: flex; gap: 1.4rem; width: max-content;
-    animation: scroll-cards 46s linear infinite;
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 1.4rem; max-width: 1120px; margin: 0 auto;
     padding: 0 5rem;
   }
-  .tcarousel-track:hover, .tcarousel-track.paused { animation-play-state: paused; }
-  @keyframes scroll-cards { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
   .t-card {
     background: var(--ivory); border-radius: 20px; padding: 1.9rem;
@@ -637,6 +659,11 @@
   </div>
   <div class="hero-visual">
     <div class="hero-logo-wrap">
+      <span class="hero-accent ring1"></span>
+      <span class="hero-accent ring2"></span>
+      <span class="hero-accent leaf leaf1"><svg viewBox="0 0 24 24" fill="none" stroke="#8B9C6B" stroke-width="1.3"><path d="M12 3c1.2 3 3 4.6 5.5 5.4C15 9.6 13.2 11.6 12 15c-1.2-3.4-3-5.4-5.5-6.6C9 7.6 10.8 6 12 3z" stroke-linejoin="round"/></svg></span>
+      <span class="hero-accent leaf leaf2"><svg viewBox="0 0 24 24" fill="none" stroke="#BE9346" stroke-width="1.3"><path d="M12 3c1.2 3 3 4.6 5.5 5.4C15 9.6 13.2 11.6 12 15c-1.2-3.4-3-5.4-5.5-6.6C9 7.6 10.8 6 12 3z" stroke-linejoin="round"/></svg></span>
+      <span class="hero-accent dotcluster" style="width:5px;height:5px;background:var(--gold);border:none;box-shadow: 22px 14px 0 -1px rgba(190,147,70,0.5), 12px 34px 0 -2px rgba(139,156,107,0.6);"></span>
       <div class="hero-logo-ring"></div>
       <span class="hero-logo-disc"><span class="mark"><img src="logo-mark.png" alt="Navira Yoga Studio emblem" /></span></span>
       <div class="hero-float-card">
@@ -796,31 +823,6 @@
         <div class="t-person"><span class="t-avatar">P</span><div><strong>Pavani Valamarthi</strong><span>Online Sessions · PCOD</span></div></div>
       </div>
       <div class="t-card">
-        <div class="t-card-top">
-          <span class="t-stars">★★★★★</span>
-          <span class="t-google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.23c0-.75-.07-1.47-.19-2.16H12v4.09h5.87a5.02 5.02 0 01-2.18 3.3v2.74h3.52c2.06-1.9 3.29-4.7 3.29-7.97z"/><path fill="#34A853" d="M12 23c2.94 0 5.4-.97 7.21-2.63l-3.52-2.74c-.98.66-2.23 1.05-3.69 1.05-2.83 0-5.23-1.91-6.09-4.48H2.28v2.82A11 11 0 0012 23z"/><path fill="#FBBC05" d="M5.91 14.2A6.6 6.6 0 015.57 12c0-.76.13-1.5.34-2.2V6.98H2.28A11 11 0 001 12c0 1.77.43 3.45 1.28 4.98l3.63-2.78z"/><path fill="#EA4335" d="M12 5.48c1.6 0 3.03.55 4.16 1.63l3.12-3.12C17.39 2.17 14.94 1 12 1a11 11 0 00-9.72 5.98l3.63 2.82C6.77 7.39 9.17 5.48 12 5.48z"/></svg>Google</span>
-        </div>
-        <p class="quote">Online yoga classes. Good!</p>
-        <div class="t-person"><span class="t-avatar">M</span><div><strong>Mahesh Kumar</strong><span>Online Sessions</span></div></div>
-      </div>
-      <!-- set B (duplicate for seamless loop) -->
-      <div class="t-card" aria-hidden="true">
-        <div class="t-card-top">
-          <span class="t-stars">★★★★★</span>
-          <span class="t-google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.23c0-.75-.07-1.47-.19-2.16H12v4.09h5.87a5.02 5.02 0 01-2.18 3.3v2.74h3.52c2.06-1.9 3.29-4.7 3.29-7.97z"/><path fill="#34A853" d="M12 23c2.94 0 5.4-.97 7.21-2.63l-3.52-2.74c-.98.66-2.23 1.05-3.69 1.05-2.83 0-5.23-1.91-6.09-4.48H2.28v2.82A11 11 0 0012 23z"/><path fill="#FBBC05" d="M5.91 14.2A6.6 6.6 0 015.57 12c0-.76.13-1.5.34-2.2V6.98H2.28A11 11 0 001 12c0 1.77.43 3.45 1.28 4.98l3.63-2.78z"/><path fill="#EA4335" d="M12 5.48c1.6 0 3.03.55 4.16 1.63l3.12-3.12C17.39 2.17 14.94 1 12 1a11 11 0 00-9.72 5.98l3.63 2.82C6.77 7.39 9.17 5.48 12 5.48z"/></svg>Google</span>
-        </div>
-        <p class="quote">Navira yoga is one of best yoga institution. I joined in online course 2 months back. I lost 5kgs weight and my body become more flexible. Thank you navira yoga.</p>
-        <div class="t-person"><span class="t-avatar">A</span><div><strong>Aparna Reddy</strong><span>Online Sessions</span></div></div>
-      </div>
-      <div class="t-card" aria-hidden="true">
-        <div class="t-card-top">
-          <span class="t-stars">★★★★★</span>
-          <span class="t-google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.23c0-.75-.07-1.47-.19-2.16H12v4.09h5.87a5.02 5.02 0 01-2.18 3.3v2.74h3.52c2.06-1.9 3.29-4.7 3.29-7.97z"/><path fill="#34A853" d="M12 23c2.94 0 5.4-.97 7.21-2.63l-3.52-2.74c-.98.66-2.23 1.05-3.69 1.05-2.83 0-5.23-1.91-6.09-4.48H2.28v2.82A11 11 0 0012 23z"/><path fill="#FBBC05" d="M5.91 14.2A6.6 6.6 0 015.57 12c0-.76.13-1.5.34-2.2V6.98H2.28A11 11 0 001 12c0 1.77.43 3.45 1.28 4.98l3.63-2.78z"/><path fill="#EA4335" d="M12 5.48c1.6 0 3.03.55 4.16 1.63l3.12-3.12C17.39 2.17 14.94 1 12 1a11 11 0 00-9.72 5.98l3.63 2.82C6.77 7.39 9.17 5.48 12 5.48z"/></svg>Google</span>
-        </div>
-        <p class="quote">The classes have so helped me for my PCOD — the yoga helped me a lot, it became a part of my life. Thank you, coach.</p>
-        <div class="t-person"><span class="t-avatar">P</span><div><strong>Pavani Valamarthi</strong><span>Online Sessions · PCOD</span></div></div>
-      </div>
-      <div class="t-card" aria-hidden="true">
         <div class="t-card-top">
           <span class="t-stars">★★★★★</span>
           <span class="t-google"><svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.5 12.23c0-.75-.07-1.47-.19-2.16H12v4.09h5.87a5.02 5.02 0 01-2.18 3.3v2.74h3.52c2.06-1.9 3.29-4.7 3.29-7.97z"/><path fill="#34A853" d="M12 23c2.94 0 5.4-.97 7.21-2.63l-3.52-2.74c-.98.66-2.23 1.05-3.69 1.05-2.83 0-5.23-1.91-6.09-4.48H2.28v2.82A11 11 0 0012 23z"/><path fill="#FBBC05" d="M5.91 14.2A6.6 6.6 0 015.57 12c0-.76.13-1.5.34-2.2V6.98H2.28A11 11 0 001 12c0 1.77.43 3.45 1.28 4.98l3.63-2.78z"/><path fill="#EA4335" d="M12 5.48c1.6 0 3.03.55 4.16 1.63l3.12-3.12C17.39 2.17 14.94 1 12 1a11 11 0 00-9.72 5.98l3.63 2.82C6.77 7.39 9.17 5.48 12 5.48z"/></svg>Google</span>
