@@ -77,4 +77,64 @@
 <span>© 2026 NaviraYoga. All rights reserved.</span>
 <span>Hyderabad, Telangana, India</span>
 </div>
-</footer><script>function toggleMenu(){const m=document.getElementById('mobileMenu');const b=document.querySelector('.hamburger');const open=m.classList.toggle('open');b.setAttribute('aria-expanded',String(open));} document.addEventListener('keydown',e=>{if(e.key==='Escape' && document.getElementById('mobileMenu').classList.contains('open')){toggleMenu();document.querySelector('.hamburger').focus();}});</script><script>(()=>{const article=document.querySelector('.journal-article'),bar=document.querySelector('.reading-progress'),links=[...document.querySelectorAll('.toc a')];function update(){const rect=article.getBoundingClientRect();bar.style.width=Math.max(0,Math.min(100,(100-rect.top)/Math.max(1,rect.height-innerHeight+100)*100))+'%';let active=null;for(const link of links){const section=document.getElementById(link.hash.slice(1));if(section&&section.getBoundingClientRect().top<=150)active=link;}for(const link of links){if(link===active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');}}addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();})();</script></body></html>
+</footer><script>function toggleMenu(){const m=document.getElementById('mobileMenu');const b=document.querySelector('.hamburger');const open=m.classList.toggle('open');b.setAttribute('aria-expanded',String(open));} document.addEventListener('keydown',e=>{if(e.key==='Escape' && document.getElementById('mobileMenu').classList.contains('open')){toggleMenu();document.querySelector('.hamburger').focus();}});</script><script>(()=>{const article=document.querySelector('.journal-article'),bar=document.querySelector('.reading-progress'),links=[...document.querySelectorAll('.toc a')];function update(){const rect=article.getBoundingClientRect();bar.style.width=Math.max(0,Math.min(100,(100-rect.top)/Math.max(1,rect.height-innerHeight+100)*100))+'%';let active=null;for(const link of links){const section=document.getElementById(link.hash.slice(1));if(section&&section.getBoundingClientRect().top<=150)active=link;}for(const link of links){if(link===active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');}}addEventListener('scroll',update,{passive:true});addEventListener('resize',update);update();})();</script>
+<!-- NaviraYoga GA4 Event Tracking -->
+<script>
+document.addEventListener('click', function(event) {
+    const link = event.target.closest('a[href]');
+    if (!link || typeof gtag !== 'function') return;
+
+    const url = new URL(link.href, window.location.href);
+    const label = (
+        link.textContent.trim() ||
+        link.getAttribute('aria-label') ||
+        'Unlabelled link'
+    ).substring(0, 100);
+
+    let eventName = null;
+
+    if (url.hostname === 'app.navirayoga.in' &&
+        url.pathname.startsWith('/register')) {
+        eventName = 'registration_click';
+    } else if (url.hostname === 'wa.me' ||
+               url.hostname === 'api.whatsapp.com') {
+        eventName = 'whatsapp_click';
+    } else if (url.hostname === 'app.navirayoga.in' &&
+               url.pathname.startsWith('/student')) {
+        eventName = 'student_login_click';
+    } else if (url.origin === window.location.origin &&
+               url.pathname.startsWith('/blog') &&
+               !window.location.pathname.startsWith('/blog')) {
+        eventName = 'journal_click';
+    }
+
+    if (eventName) {
+        gtag('event', eventName, {
+            button_text: label,
+            source_page: window.location.pathname
+        });
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const pricing = document.getElementById('navira-pricing');
+
+    if (pricing && 'IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting &&
+                    typeof gtag === 'function') {
+                    gtag('event', 'pricing_view', {
+                        source_page: window.location.pathname
+                    });
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(pricing);
+    }
+});
+</script>
+
+</body></html>
