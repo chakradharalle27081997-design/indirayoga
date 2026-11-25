@@ -569,15 +569,9 @@ footer{padding-top:48px}
 <style>
 .nv-philosophy,.nv-session,.nv-method{padding:clamp(55px,7vw,100px) max(5%,calc((100% - 1240px)/2));scroll-margin-top:90px}.nv-philosophy,.nv-method{background:#e8ecdf}.nv-philosophy>p{max-width:760px;margin:20px auto 0;text-align:center;line-height:1.85;color:#435540}.nv-goals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;max-width:1240px;margin:auto}.nv-goal{border:1px solid #d7ddcf;border-radius:20px;overflow:hidden;background:#fffefa}.nv-goal img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}.nv-goal>div{padding:24px}.nv-goal h3,.nv-session-grid h3,.nv-method-grid h3,.nv-membership h3{font-size:1.35rem;line-height:1.3;margin:0 0 12px;color:#253b2b}.nv-goal p,.nv-session-grid p,.nv-method-grid p,.nv-membership p{font-size:1rem;line-height:1.7;color:#53634e;margin:0}.nv-note{max-width:850px;margin:24px auto 0!important;text-align:center;font-size:.9rem!important;line-height:1.65;color:#53634e}.nv-session-grid,.nv-method-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:16px;margin:32px auto 0;max-width:1240px}.nv-method-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.nv-session-grid article,.nv-method-grid article{background:#fffefa;border:1px solid #d7ddcf;border-radius:16px;padding:22px}.nv-session-grid span,.nv-method-grid span{display:block;color:#946b30;font-weight:700;font-size:.85rem;margin-bottom:16px}.nv-membership{max-width:1000px;margin:32px auto 0;padding:28px;border:1px solid #d7ddcf;border-radius:18px;background:#fffefa}.nv-membership h3{text-align:center}.nv-membership>div{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:22px}.nv-membership strong{color:#263e2d}.reveal,.reveal-l,.reveal-r{opacity:1!important;transform:none!important;transition:none!important} @media(max-width:1000px){.nv-session-grid{grid-template-columns:repeat(3,1fr)}.nv-method-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:760px){.nv-goals,.nv-session-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.nv-goal>div{padding:16px}.nv-membership>div{grid-template-columns:1fr}}@media(max-width:480px){.nv-goals,.nv-session-grid,.nv-method-grid{grid-template-columns:1fr}.nv-philosophy,.nv-session,.nv-method{padding:48px 6%}.nv-goal h3{font-size:1.3rem}} @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
 </style><style>.nv-price-duration{font-size:.88rem;color:#53634e;margin:16px 0 4px;font-weight:600}.nv-price-tier{border-bottom:1px solid #e8e8df;padding:12px 0 15px}.nv-price-tier .navira-price-option{border:0;padding:0 0 7px}.nv-price-tier p{font-size:.88rem;line-height:1.65;color:#53634e;margin:0}.navira-price-card{display:flex;flex-direction:column}.navira-price-link{align-self:flex-start;margin-top:auto}.navira-price-card .navira-price-note{margin:18px 0}.navira-pricing{scroll-margin-top:90px}@media(max-width:480px){.nv-price-tier .navira-price-option{flex-wrap:wrap;gap:5px}.nv-price-tier .navira-price-option strong{font-size:24px}}</style>
-<!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KNV3SK156W"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-KNV3SK156W');
-</script>
 
+
+<link rel="stylesheet" href="/js/consent.css"><script defer src="/js/consent.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Skip to content</a>
@@ -859,64 +853,8 @@ footer{padding-top:48px}
   }
 </script>
 
-<!-- NaviraYoga GA4 Event Tracking -->
-<script>
-document.addEventListener('click', function(event) {
-    const link = event.target.closest('a[href]');
-    if (!link || typeof gtag !== 'function') return;
 
-    const url = new URL(link.href, window.location.href);
-    const label = (
-        link.textContent.trim() ||
-        link.getAttribute('aria-label') ||
-        'Unlabelled link'
-    ).substring(0, 100);
 
-    let eventName = null;
-
-    if (url.hostname === 'app.navirayoga.in' &&
-        url.pathname.startsWith('/register')) {
-        eventName = 'registration_click';
-    } else if (url.hostname === 'wa.me' ||
-               url.hostname === 'api.whatsapp.com') {
-        eventName = 'whatsapp_click';
-    } else if (url.hostname === 'app.navirayoga.in' &&
-               url.pathname.startsWith('/student')) {
-        eventName = 'student_login_click';
-    } else if (url.origin === window.location.origin &&
-               url.pathname.startsWith('/blog') &&
-               !window.location.pathname.startsWith('/blog')) {
-        eventName = 'journal_click';
-    }
-
-    if (eventName) {
-        gtag('event', eventName, {
-            button_text: label,
-            source_page: window.location.pathname
-        });
-    }
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-    const pricing = document.getElementById('navira-pricing');
-
-    if (pricing && 'IntersectionObserver' in window) {
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting &&
-                    typeof gtag === 'function') {
-                    gtag('event', 'pricing_view', {
-                        source_page: window.location.pathname
-                    });
-                    observer.disconnect();
-                }
-            });
-        }, { threshold: 0.1 });
-
-        observer.observe(pricing);
-    }
-});
-</script>
-
+<div class="nv-policy-links"><a href="/privacy.html">Privacy</a> · <a href="/terms.html">Terms</a> · <a href="/cookies.html">Cookies</a> · <button type="button" data-nv-preferences>Cookie preferences</button></div>
 </body>
 </html>
